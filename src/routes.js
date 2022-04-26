@@ -3,8 +3,9 @@ const routes = express.Router();
 
 const BookController = require("./controllers/BookController");
 
-routes.post("/book", BookController.create);
+routes.post("/book/create", BookController.create);
 routes.get("/book/:type", BookController.read);
-routes.delete("/book/:id", BookController.delete);
+routes.get("/book/:id", BookController.readById);
+routes.delete("/book/delete/:id", BookController.delete);
 
 module.exports = routes;

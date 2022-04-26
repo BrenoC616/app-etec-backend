@@ -2,8 +2,8 @@ const Books = require("../models/BookData");
 
 module.exports = {
   async read(request, response) {
-    const {type} = request.params;
-    const {subtype} = request.query;
+    const { type } = request.params;
+    const { subtype } = request.query;
     let bookList = await Books.find({ type: type });
 
     if (subtype) {
@@ -12,14 +12,22 @@ module.exports = {
 
     return response.json(bookList);
   },
+  async readById(request, response) {
+    const { id } = request.params;
+
+    let bookById = await Books.findOne({ _id: id });
+
+    return response.json(bookById);
+  },
   async create(request, response) {
-    const { title, description, type, subtype } = request.body;
+    const { coverUrl, title, description, type, subtype } = request.body;
 
     if (!title || !type) {
       return response.status(400).json({ error: "Necessário um Título/Tipo" });
     }
 
     const bookCreated = await Books.create({
+      coverUrl,
       title,
       description,
       type,
@@ -37,6 +45,8 @@ module.exports = {
       return response.json(bookDeleted);
     }
 
-    return response.status(401).json({ error: "Não foi encontrado para deletar." });
+    return response
+      .status(401)
+      .json({ error: "Não foi encontrado para deletar." });
   },
 };

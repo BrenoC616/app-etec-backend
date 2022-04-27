@@ -13,9 +13,9 @@ module.exports = {
     return response.json(bookList);
   },
   async readById(request, response) {
-    const { id } = request.params;
+    const { id, type } = request.params;
 
-    let bookById = await Books.findOne({ _id: id });
+    let bookById = await Books.findOne({ _id: id, type: type });
 
     return response.json(bookById);
   },

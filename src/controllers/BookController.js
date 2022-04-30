@@ -7,7 +7,7 @@ module.exports = {
     let bookList = await Books.find({ type: type });
 
     if (subtype) {
-      bookList = await Books.find({ subtype: subtype });
+      bookList = await Books.find({ type: type, subtype: subtype });
     }
 
     return response.json(bookList);

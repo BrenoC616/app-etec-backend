@@ -1,4 +1,5 @@
 const Books = require("../models/BookData");
+const mongoose = require("mongoose");
 
 module.exports = {
   async read(request, response) {
@@ -15,9 +16,15 @@ module.exports = {
   async readById(request, response) {
     const { id, type } = request.params;
 
-    let bookById = await Books.findOne({ _id: id, type: type });
+    const isValidId = mongoose.Types.ObjectId.isValid(id);
 
-    return response.json(bookById);
+    if (isValidId) {
+      let bookById = await Books.findOne({ _id: id, type: type });
+      if (bookById) {
+        return response.json(bookById);
+      }
+    }
+    return response.status(401).json({ error: "Não foi encontrado." });
   },
   async create(request, response) {
     const { coverUrl, title, description, type, subtype } = request.body;

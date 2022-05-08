@@ -7,10 +7,10 @@ require("dotenv").config();
 const app = express();
 require("./config/dbConfig");
 
-let port = process.env.PORT | 3333;
+const PORT = process.env.PORT | 3333;
 
 app.use(cors());
 app.use(express.json());
 app.use(routes);
 
-app.listen(port);
+app.listen(PORT, () => console.log(`Listen on ${PORT}`));

@@ -7,7 +7,7 @@ const SubtypeController = require("./controllers/SubtypeController");
 routes.get("/", async (request, response) => {
   try {
     response.status(200).json({
-      message: "Concluído!",
+      message: "API está Funcional!",
     });
   } catch (error) {
     console.log(error);
@@ -17,9 +17,13 @@ routes.get("/", async (request, response) => {
 
 routes.get("/book/:type", BookController.read);
 routes.get("/book/:type/:id", BookController.readById);
-routes.post("/book/create", BookController.create);
-routes.delete("/book/delete/:id", BookController.delete);
 
 routes.get("/subtypes/:type", SubtypeController.read);
+
+routes.get("/*", async (request, response) => {
+  response.status(404).json({
+    message: "Not found!",
+  });
+});
 
 module.exports = routes;

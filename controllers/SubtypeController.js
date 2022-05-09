@@ -3,8 +3,12 @@ const Subtype = require("../models/SubtypeData");
 module.exports = {
   async read(request, response) {
     const { type } = request.params
-    let SubtypeList = await Subtype.find({ type: type });
+    let subtypeList = await Subtype.find({ type: type });
 
-    return response.json(SubtypeList);
+    if (subtypeList.length == 0) {
+      return response.status(404).json({ message: "Not found!" });
+    }
+
+    return response.json(subtypeList);
   }
 }
